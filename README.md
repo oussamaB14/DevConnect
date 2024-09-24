@@ -35,7 +35,7 @@ DevConnect is a full-stack web application built with React and NestJS. It's a p
 * Notifications for new followers, comments, and likes
 
 * Dark mode and light mode for customizable interface
-## Tech Stack
+## Technologies Used
 
 **Client:** React,with Hooks and Context API, Redux, TailwindCSS, Formik, and Yup
 
