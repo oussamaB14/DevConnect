@@ -4,7 +4,6 @@
 ### 2. [Features](#features)
 ### 3. [Technologies Used](#technologies-used)
 ### 4. [Getting Started](#getting-started)
-### 6. [Deployment](#deployment)
 ### 7. [Contributing](#contributing)
 
 ##  Introduction
