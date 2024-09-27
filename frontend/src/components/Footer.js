@@ -3,28 +3,28 @@ import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-100">
+    <footer className="bg-gray-100 dark:bg-gray-900">
       <div className="mx-auto max-w-5xl px-4 py-16 sm:px-6 lg:px-8">
-        <div className="flex justify-center text-teal-600">
+        <div className="flex justify-center text-teal-600 dark:text-teal-400">
           <div className="flex items-center ">
             <Link to="/" className="inline-block py-4 md:py-0 ">
               <span className="p-1 text-xl font-black leading-none">
-                <span className=" text-3xl text-blue-800">Dev</span>
-                <span className="text-3xl text-blue-500">Connect.</span>
+                <span className="text-3xl text-blue-800 dark:text-blue-400">Dev</span>
+                <span className="text-3xl text-blue-500 dark:text-blue-300">Connect.</span>
               </span>
             </Link>
           </div>
         </div>
 
-        <p className="mx-auto mt-6 max-w-md text-center leading-relaxed text-gray-500">
-          Discover, Share, Collaborate – What’s Your Next Big Project?
+        <p className="mx-auto mt-6 max-w-md text-center leading-relaxed text-gray-500 dark:text-gray-400">
+          Discover, Share, Collaborate – What's Your Next Big Project?
         </p>
 
         <ul className="mt-12 flex flex-wrap justify-center gap-6 md:gap-8 lg:gap-12">
           {["Home", "Features", "About", "Blog", "Contact"].map((item) => (
             <li key={item}>
               <Link
-                className="text-gray-700 transition hover:text-gray-700/75"
+                className="text-gray-700 transition hover:text-gray-700/75 dark:text-gray-300 dark:hover:text-gray-300/75"
                 to={item === "Home" ? "/" : "/" + item.toLowerCase()}
               >
                 {item}
@@ -57,7 +57,7 @@ const Footer = () => {
             },
           ].map((item) => (
             <li key={item.name}>
-              <Link className="text-gray-700 transition hover:text-gray-700/75">
+              <Link className="text-gray-700 transition hover:text-gray-700/75 dark:text-gray-300 dark:hover:text-gray-300/75">
                 <span className="sr-only">{item.name}</span>
                 <svg
                   className="size-6"

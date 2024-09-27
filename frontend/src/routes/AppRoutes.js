@@ -7,7 +7,7 @@ import Signin from "../pages/Signin";
 import Signup from "../pages/Signup";
 import Features from "../pages/Features";
 import Blog from "../pages/Blog";
-
+import SmallFeatures from "../pages/SmallFeatures";
 export default function AppRoutes() {
   return (
     <Routes>
@@ -18,6 +18,7 @@ export default function AppRoutes() {
       <Route path="/signup" element={<Signup />} />
       <Route path="/features" element={<Features />} />
       <Route path="/blog" element={<Blog />} />
+      <Route path="/small-features" element={<SmallFeatures />} />
       {/* Add more routes as needed */}
     </Routes>
   );

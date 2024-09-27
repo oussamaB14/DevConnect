@@ -1,165 +1,114 @@
 import React, { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 
 export default function AccountDropdown() {
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-
-  const trigger = useRef(null);
-  const dropdown = useRef(null);
-
-  // close on click outside
+  const [showAvatarMenu, setShowAvatarMenu] = useState(false);
+  const menuRef = useRef(null);
   useEffect(() => {
-    const clickHandler = ({ target }) => {
-      if (!dropdown.current) return;
-      if (
-        !dropdownOpen ||
-        dropdown.current.contains(target) ||
-        trigger.current.contains(target)
-      )
-        return;
-      setDropdownOpen(false);
+    const handleClickOutside = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setShowAvatarMenu(false);
+      }
     };
-    document.addEventListener("click", clickHandler);
-    return () => document.removeEventListener("click", clickHandler);
-  });
 
-  // close if the esc key is pressed
-  useEffect(() => {
-    const keyHandler = ({ keyCode }) => {
-      if (!dropdownOpen || keyCode !== 27) return;
-      setDropdownOpen(false);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
     };
-    document.addEventListener("keydown", keyHandler);
-    return () => document.removeEventListener("keydown", keyHandler);
-  });
+  }, []);
+  // Toggle menu state (make sure the callback form is used)
 
   return (
-    <section className="bg-gray-2 py-20 dark:bg-dark">
-      <div className="container">
-        <div className="flex justify-center">
-          <div className="relative inline-block">
-            <button
-              ref={trigger}
-              onClick={() => setDropdownOpen(!dropdownOpen)}
-              className="mb-3.5 inline-flex h-12 items-center justify-center gap-2 rounded-lg border border-stroke bg-white px-6 py-3 text-base font-medium text-dark dark:border-dark-3 dark:bg-dark-2 dark:text-white"
-            >
-              Account
-              <span
-                className={`duration-100 ${dropdownOpen ? "-scale-y-100" : ""}`}
-              >
-                <svg
-                  width="20"
-                  height="20"
-                  viewBox="0 0 20 20"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M10 14.25C9.8125 14.25 9.65625 14.1875 9.5 14.0625L2.3125 7C2.03125 6.71875 2.03125 6.28125 2.3125 6C2.59375 5.71875 3.03125 5.71875 3.3125 6L10 12.5312L16.6875 5.9375C16.9688 5.65625 17.4062 5.65625 17.6875 5.9375C17.9688 6.21875 17.9688 6.65625 17.6875 6.9375L10.5 14C10.3437 14.1562 10.1875 14.25 10 14.25Z"
-                    fill="currentColor"
-                  />
-                </svg>
-              </span>
-            </button>
+    <>
+      <div>
+        <div ref={menuRef} className="relative inline-block text-left">
+          <button
+            type="button"
+            className="inline-flex items-center justify-center w-10 h-10 ml-2 text-sm bg-gray-200 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            id="avatar-menu"
+            aria-expanded={showAvatarMenu}
+            aria-haspopup="true"
+            onClick={(e) => {
+              e.stopPropagation();
+              setShowAvatarMenu(!showAvatarMenu);
+            }}
+          >
+            <span className="sr-only">Open user menu</span>
+            <img
+              className="w-8 h-8 rounded-full"
+              src="https://img.freepik.com/photos-gratuite/portrait-homme-riant_23-2148859448.jpg?size=338&ext=jpg&ga=GA1.1.2008272138.1727222400&semt=ais_hybrid"
+              alt="User avatar"
+            />
+          </button>
+
+          {showAvatarMenu && (
             <div
-              ref={dropdown}
-              onFocus={() => setDropdownOpen(true)}
-              onBlur={() => setDropdownOpen(false)}
-              className={`absolute right-0 top-full w-[240px] divide-y divide-stroke overflow-hidden rounded-lg bg-white dark:divide-dark-3 dark:bg-dark-2 ${dropdownOpen ? "block" : "hidden"}`}
+              className="absolute end-0 z-10 mt-0.5 w-56 divide-y divide-gray-100 rounded-md border border-gray-100 bg-white shadow-lg"
+              role="menu"
+              aria-orientation="vertical"
+              aria-labelledby="avatar-menu"
             >
-              <div className="flex items-center gap-3 px-4 py-3">
-                <div className="relative aspect-square w-10 rounded-full">
-                  <img
-                    src="https://cdn.tailgrids.com/2.2/assets/core-components/images/account-dropdowns/image-1.jpg"
-                    alt="account"
-                    className="w-full rounded-full object-cover object-center"
-                  />
-                  <span className="absolute -right-0.5 -top-0.5 block h-3.5 w-3.5 rounded-full border-2 border-white bg-green dark:border-dark"></span>
-                </div>
-                <div>
-                  <p className="text-sm font-semibold text-dark dark:text-white">
-                    Andrio Miller
-                  </p>
-                  <p className="text-sm text-body-color dark:text-dark-6">
-                    miller@company.com
-                  </p>
-                </div>
+              <div class="px-4 py-3 text-sm text-gray-700 ">
+                <div>Bonnie Green</div>
+                <div class="font-medium truncate">name@website.com</div>
               </div>
-              <div>
-                <a
-                  href="#0"
-                  className="flex w-full items-center justify-between px-4 py-2.5 text-sm font-medium text-dark hover:bg-gray-50 dark:text-white dark:hover:bg-white/5"
+              <div className="py-1" role="none">
+                <Link
+                  to="/profile"
+                  className="flex  w-full items-center gap-2 rounded-lg px-4 py-2 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
+                  role="menuitem"
+                  onClick={() => setShowAvatarMenu(false)}
                 >
-                  View profile
-                </a>
-                <a
-                  href="#0"
-                  className="flex w-full items-center justify-between px-4 py-2.5 text-sm font-medium text-dark hover:bg-gray-50 dark:text-white dark:hover:bg-white/5"
+                  <span>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth="1.5"
+                      stroke="currentColor"
+                      className="w-5 h-5"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M15.75 7.5a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0zM4.5 19.5a7.5 7.5 0 0 1 15 0"
+                      />
+                    </svg>
+                  </span>
+                  Go to Profile
+                </Link>
+                <hr className="my-1 border-t border-gray-200" />
+                <button
+                  type="button"
+                  className="flex w-full items-center gap-2 rounded-lg px-4 py-2 text-sm text-red-700 hover:bg-red-50"
+                  role="menuitem"
+                  onClick={() => {
+                    // Add logout logic here
+                    console.log("Logging out");
+                    setShowAvatarMenu(false);
+                  }}
                 >
-                  Settings
-                </a>
-                <a
-                  href="#0"
-                  className="flex w-full items-center justify-between px-4 py-2.5 text-sm font-medium text-dark hover:bg-gray-50 dark:text-white dark:hover:bg-white/5"
-                >
-                  Keyboard shortcuts
-                  <span className="text-xs text-dark-5"> ⌘K </span>
-                </a>
-              </div>
-              <div>
-                <a
-                  href="#0"
-                  className="flex w-full items-center justify-between px-4 py-2.5 text-sm font-medium text-dark hover:bg-gray-50 dark:text-white dark:hover:bg-white/5"
-                >
-                  Company profile
-                </a>
-                <a
-                  href="#0"
-                  className="flex w-full items-center justify-between px-4 py-2.5 text-sm font-medium text-dark hover:bg-gray-50 dark:text-white dark:hover:bg-white/5"
-                >
-                  Team
-                </a>
-                <a
-                  href="#0"
-                  className="flex w-full items-center justify-between px-4 py-2.5 text-sm font-medium text-dark hover:bg-gray-50 dark:text-white dark:hover:bg-white/5"
-                >
-                  Invite colleagues
-                </a>
-              </div>
-              <div>
-                <a
-                  href="#0"
-                  className="flex w-full items-center justify-between px-4 py-2.5 text-sm font-medium text-dark hover:bg-gray-50 dark:text-white dark:hover:bg-white/5"
-                >
-                  Changelog
-                </a>
-                <a
-                  href="#0"
-                  className="flex w-full items-center justify-between px-4 py-2.5 text-sm font-medium text-dark hover:bg-gray-50 dark:text-white dark:hover:bg-white/5"
-                >
-                  Slack Community
-                </a>
-                <a
-                  href="#0"
-                  className="flex w-full items-center justify-between px-4 py-2.5 text-sm font-medium text-dark hover:bg-gray-50 dark:text-white dark:hover:bg-white/5"
-                >
-                  Support
-                </a>
-                <a
-                  href="#0"
-                  className="flex w-full items-center justify-between px-4 py-2.5 text-sm font-medium text-dark hover:bg-gray-50 dark:text-white dark:hover:bg-white/5"
-                >
-                  API
-                </a>
-              </div>
-              <div>
-                <button className="flex w-full items-center justify-between px-4 py-2.5 text-sm font-medium text-dark hover:bg-gray-50 dark:text-white dark:hover:bg-white/5">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth="1.5"
+                    stroke="currentColor"
+                    className="size-4"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3"
+                    />
+                  </svg>
                   Log out
                 </button>
               </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
-    </section>
+    </>
   );
 }

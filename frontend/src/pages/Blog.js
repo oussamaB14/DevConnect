@@ -1,9 +1,9 @@
 import React from "react";
-import Footer from "../components/Footer";
+import BlogHeader from "../components/BlogHeader";
 export default function Blog() {
   return (
     <>
-      <Footer />
+      <BlogHeader />
     </>
   );
 }

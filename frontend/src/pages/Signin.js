@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Footer from "../components/Footer";
 
 export default function Signin() {
   return (
@@ -72,7 +71,6 @@ export default function Signin() {
           </div>
         </div>
       </section>
-      <Footer />
     </section>
   );
 }
