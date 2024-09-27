@@ -151,7 +151,7 @@ export default function Features() {
               {features.map((item, idx) => (
                 <li
                   key={idx}
-                  className="bg-white dark:bg-gray-800 space-y-3 p-4 border border-gray-200 dark:border-gray-700 rounded-lg"
+                  className="bg-white dark:bg-gray-800 space-y-3 p-4 border border-gray-200 dark:border-gray-700 rounded-lg transition-shadow duration-300 ease-in-out hover:shadow-lg dark:hover:shadow-lg dark:hover:shadow-gray-700/50"
                 >
                   <div className="text-indigo-600 dark:text-indigo-400 pb-3">{item.icon}</div>
                   <h4 className="text-lg text-gray-800 dark:text-white font-semibold">

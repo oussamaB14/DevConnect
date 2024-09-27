@@ -4,7 +4,7 @@ export default function Stats() {
   const stats = [
     {
       data: "35K",
-      title: "Customers",
+      title: "Clients",
     },
     {
       data: "40+",
@@ -12,17 +12,17 @@ export default function Stats() {
     },
     {
       data: "30M+",
-      title: "Total revenue",
+      title: "Projects",
     },
   ];
   return (
-    <section className="py-28 bg-gray-900">
+    <section className="py-28 bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
       <div className="max-w-screen-xl mx-auto px-4 md:px-8">
         <div className="max-w-2xl mx-auto text-center">
-          <h3 className="text-white text-3xl font-semibold sm:text-4xl">
+          <h3 className="text-gray-800 dark:text-white text-3xl font-semibold sm:text-4xl">
             Our customers are always happy
           </h3>
-          <p className="mt-3 text-gray-300">
+          <p className="mt-3 text-gray-600 dark:text-gray-300">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi
             venenatis sollicitudin quam ut tincidunt.
           </p>
@@ -32,12 +32,12 @@ export default function Stats() {
             {stats.map((item, idx) => (
               <li
                 key={idx}
-                className="w-full text-center bg-gray-800 px-12 py-4 rounded-lg sm:w-auto"
+                className="w-full text-center bg-gray-100 dark:bg-gray-800 px-12 py-4 rounded-lg sm:w-auto"
               >
-                <h4 className="text-4xl text-white font-semibold">
+                <h4 className="text-4xl text-gray-800 dark:text-white font-semibold">
                   {item.data}
                 </h4>
-                <p className="mt-3 text-gray-400 font-medium">{item.title}</p>
+                <p className="mt-3 text-gray-600 dark:text-gray-400 font-medium">{item.title}</p>
               </li>
             ))}
           </ul>
