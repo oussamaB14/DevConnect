@@ -4,9 +4,12 @@ import { Link, useLocation } from "react-router-dom";
 const Navbar = () => {
   const [showMenu, setShowMenu] = useState(false);
   const location = useLocation();
+//   const [darkMode, setDarkMode] = useState(false);
 
   const isActive = (path) => {
-    return location.pathname === path ? "text-indigo-600" : "text-gray-700 hover:text-indigo-600";
+    return location.pathname === path
+      ? "text-indigo-600"
+      : "text-gray-700 hover:text-indigo-600";
   };
 
   return (
@@ -15,7 +18,8 @@ const Navbar = () => {
         <div className="flex items-center justify-start w-1/4 h-full pr-4">
           <Link to="/" className="inline-block py-4 md:py-0">
             <span className="p-1 text-xl font-black leading-none">
-              <span className="text-blue-800">Dev</span><span className="text-blue-500">Connect.</span>
+              <span className="text-blue-800">Dev</span>
+              <span className="text-blue-500">Connect.</span>
             </span>
           </Link>
         </div>
@@ -34,25 +38,41 @@ const Navbar = () => {
             <div className="flex flex-col items-start justify-center w-full space-x-6 text-center lg:space-x-8 md:w-2/3 md:mt-0 md:flex-row md:items-center">
               <Link
                 to="/"
-                className={`inline-block w-full py-2 mx-0 ml-6 font-medium text-left md:ml-0 md:w-auto md:px-0 md:mx-2 lg:mx-3 md:text-center ${isActive('/')}`}
+                className={`inline-block w-full py-2 mx-0 ml-6 font-medium text-left md:ml-0 md:w-auto md:px-0 md:mx-2 lg:mx-3 md:text-center ${isActive(
+                  "/"
+                )}`}
               >
                 Home
               </Link>
               <Link
                 to="/features"
-                className={`inline-block w-full py-2 mx-0 font-medium text-left md:w-auto md:px-0 md:mx-2 lg:mx-3 md:text-center ${isActive('/features')}`}
+                className={`inline-block w-full py-2 mx-0 font-medium text-left md:w-auto md:px-0 md:mx-2 lg:mx-3 md:text-center ${isActive(
+                  "/features"
+                )}`}
               >
                 Features
               </Link>
               <Link
                 to="/about"
-                className={`inline-block w-full py-2 mx-0 font-medium text-left md:w-auto md:px-0 md:mx-2 lg:mx-3 md:text-center ${isActive('/about')}`}
+                className={`inline-block w-full py-2 mx-0 font-medium text-left md:w-auto md:px-0 md:mx-2 lg:mx-3 md:text-center ${isActive(
+                  "/about"
+                )}`}
               >
                 About
               </Link>
               <Link
+                to="/blog"
+                className={`inline-block w-full py-2 mx-0 font-medium text-left md:w-auto md:px-0 md:mx-2 lg:mx-3 md:text-center ${isActive(
+                  "/blog"
+                )}`}
+              >
+                Blog
+              </Link>
+              <Link
                 to="/contact"
-                className={`inline-block w-full py-2 mx-0 font-medium text-left md:w-auto md:px-0 md:mx-2 lg:mx-3 md:text-center ${isActive('/contact')}`}
+                className={`inline-block w-full py-2 mx-0 font-medium text-left md:w-auto md:px-0 md:mx-2 lg:mx-3 md:text-center ${isActive(
+                  "/contact"
+                )}`}
               >
                 Contact
               </Link>
@@ -73,10 +93,13 @@ const Navbar = () => {
                 </svg>
               </a>
             </div>
+           
             <div className="flex flex-col items-start justify-end w-full pt-4 md:items-center md:w-1/3 md:flex-row md:py-0">
               <Link
                 to="/signin"
-                className={`w-full px-3 py-2 mr-0 md:mr-2 lg:mr-3 md:w-auto ${isActive('/signin')}`}
+                className={`w-full px-3 py-2 mr-0 md:mr-2 lg:mr-3 md:w-auto ${isActive(
+                  "/signin"
+                )}`}
               >
                 Sign In
               </Link>
