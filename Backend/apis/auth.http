@@ -1,6 +1,9 @@
+@baseUrl = http://localhost:3000
+@contentType = application/json
+
 ### Register a new user
-POST http://localhost:3000/auth/register
-Content-Type: application/json
+POST {{baseUrl}}/user/register
+Content-Type: {{contentType}}
 
 {
   "username": "testuser",
@@ -9,26 +12,44 @@ Content-Type: application/json
 }
 
 ### Login
-POST http://localhost:3000/auth/login
-Content-Type: application/json
+POST {{baseUrl}}/auth/login
+Content-Type: {{contentType}}
 
 {
   "email": "testuser@example.com",
   "password": "password123"
 }
 
-### Get current user profile (Protected route)
-GET http://localhost:3000/auth/profile
-Authorization: Bearer {{authToken}}
-
-### Refresh token
-POST http://localhost:3000/auth/refresh-token
-Authorization: Bearer {{refreshToken}}
+### Get current user (protected route)
+GET {{baseUrl}}/auth/me
+Authorization: Bearer YOUR_JWT_TOKEN_HERE
 
 ### Logout
-POST http://localhost:3000/auth/logout
-Authorization: Bearer {{authToken}}
+POST {{baseUrl}}/auth/logout
+Authorization: Bearer YOUR_JWT_TOKEN_HERE
 
-### Variables
-@authToken = your_auth_token_here
-@refreshToken = your_refresh_token_here
+### Refresh token
+POST {{baseUrl}}/auth/refresh-token
+Content-Type: {{contentType}}
+
+{
+  "refreshToken": "YOUR_REFRESH_TOKEN_HERE"
+}
+
+### Google OAuth login (this will redirect to Google)
+GET {{baseUrl}}/auth/oauth/google
+
+### Google OAuth callback (for testing purposes)
+GET {{baseUrl}}/auth/google/callback?code=SAMPLE_CODE&state=SAMPLE_STATE
+
+
+### Test Google OAuth Login
+GET {{baseUrl}}/auth/oauth/google
+
+### Test Google OAuth Redirect
+GET {{baseUrl}}/auth/oauth/google/redirect
+
+# Note: The redirect URL is typically handled automatically by the browser
+# and not directly called. This is just for testing/demonstration purposes.
+# In a real scenario, you would initiate the OAuth flow from a frontend application.
+
