@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import AccountDropdown from "./AccountDropDown";
 import ThemeToggle from "./ThemeToggel";
-
+import logo from "../assets/images/logo.png";
 const Navbar = () => {
   const [showMenu, setShowMenu] = useState(false);
   const location = useLocation();
@@ -22,8 +22,9 @@ const Navbar = () => {
     <nav className="relative z-50 h-24 select-none bg-white dark:bg-gray-900">
       <div className="container relative flex flex-wrap items-center justify-between h-24 mx-auto overflow-hidden font-medium border-b border-gray-200 dark:border-gray-700 md:overflow-visible lg:justify-center sm:px-4 md:px-2 lg:px-0">
         <div className="flex items-center justify-start w-1/4 h-full pr-4">
-          <Link to="/" className="inline-block py-4 md:py-0">
-            <span className="p-1 text-xl font-black leading-none">
+          <Link to="/" className="flex ms-2 md:me-24">
+            <img src={logo} className="h-8" alt=" Logo" />
+            <span className="p-1 font-black self-center text-xl  whitespace-nowrap dark:text-white">
               <span className="text-blue-800 dark:text-blue-400">Dev</span>
               <span className="text-blue-500 dark:text-blue-300">Connect.</span>
             </span>
@@ -39,7 +40,8 @@ const Navbar = () => {
               to="/"
               className="items-center block w-auto h-16 px-6 text-xl font-black leading-none text-gray-900 dark:text-white md:hidden"
             >
-              DevConnect<span className="text-indigo-600 dark:text-indigo-400">.</span>
+              DevConnect
+              <span className="text-indigo-600 dark:text-indigo-400">.</span>
             </Link>
             <div className="flex flex-col items-start justify-center w-full space-x-6 text-center lg:space-x-8 md:w-2/3 md:mt-0 md:flex-row md:items-center">
               <Link

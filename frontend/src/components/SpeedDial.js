@@ -3,7 +3,6 @@ import { Tooltip } from 'flowbite';
 
 export default function SpeedDial() {
   useEffect(() => {
-    // Initialize all tooltips
     const tooltipTriggerList = document.querySelectorAll('[data-tooltip-target]');
     tooltipTriggerList.forEach(tooltipTriggerEl => {
       new Tooltip(tooltipTriggerEl);
@@ -15,7 +14,7 @@ export default function SpeedDial() {
       <div className="fixed end-6 bottom-6 group">
         <div
           id="speed-dial-menu-square"
-          className="flex flex-col items-center hidden mb-4 space-y-2"
+          className=" flex-col items-center hidden mb-4 space-y-2"
         >
           <button
             type="button"

@@ -8,7 +8,6 @@ import About from "./About";
 import Toast from "../components/Toasts/Toast";
 import { ToastType } from "../components/Toasts/Toast";
 import Accordion from "../components/Accordion";
-import PopoverUserPic from "../components/PopoverUserPic";
 const Landing = () => {
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors duration-300">
@@ -20,7 +19,6 @@ const Landing = () => {
       <Sponsors />
       <SmallFeatures />
       <Accordion />
-      <PopoverUserPic />
       </div>
   );
 };
