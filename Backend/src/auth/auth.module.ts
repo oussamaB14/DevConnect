@@ -16,6 +16,7 @@ import { RolesGuard } from './guards/roles/roles.guard';
 import googleOauthConfig from './config/google-oauth.config';
 import { GoogleStrategy } from './strategies/google.strategy';
 import { User } from 'src/user/entities/user.entity';
+import { UserModule } from 'src/user/user.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { User } from 'src/user/entities/user.entity';
     ConfigModule.forFeature(jwtConfig),
     ConfigModule.forFeature(refreshJwtConfig),
     ConfigModule.forFeature(googleOauthConfig),
+    UserModule,
   ],
   controllers: [AuthController],
   providers: [
@@ -42,5 +44,6 @@ import { User } from 'src/user/entities/user.entity';
       useClass: RolesGuard,
     },
   ],
+  exports: [AuthService], // Export AuthService so it can be used in other modules
 })
 export class AuthModule {}

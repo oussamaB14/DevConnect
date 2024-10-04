@@ -7,7 +7,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import dbConfig from './config/db.config';
 import productionDbConfig from './config/db.config.production';
-
+import { GoogleStrategy } from './auth/strategies/google.strategy';
+import googleOauthConfig from './auth/config/google-oauth.config';
 @Module({
   imports: [
     AuthModule,
@@ -15,7 +16,7 @@ import productionDbConfig from './config/db.config.production';
       isGlobal: true,
       expandVariables: true,
       envFilePath: '.env',
-      load: [dbConfig, productionDbConfig],
+      load: [dbConfig, productionDbConfig, googleOauthConfig],
     }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
@@ -29,6 +30,6 @@ import productionDbConfig from './config/db.config.production';
     UserModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, GoogleStrategy],
 })
 export class AppModule {}

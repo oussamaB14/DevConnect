@@ -1,4 +1,9 @@
-import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  ConflictException,
+  Inject,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { compare } from 'bcrypt';
 import { UserService } from 'src/user/user.service';
@@ -8,15 +13,20 @@ import { ConfigType } from '@nestjs/config';
 import * as argon2 from 'argon2';
 import { CurrentUser } from './types/current-user';
 import { CreateUserDto } from 'src/user/dto/create-user.dto';
+import { OAuth2Client } from 'google-auth-library';
 
 @Injectable()
 export class AuthService {
+  private googleClient: OAuth2Client;
+
   constructor(
     private userService: UserService,
     private jwtService: JwtService,
     @Inject(refreshJwtConfig.KEY)
     private refreshTokenConfig: ConfigType<typeof refreshJwtConfig>,
-  ) {}
+  ) {
+    this.googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+  }
 
   async validateUser(email: string, password: string) {
     const user = await this.userService.findByEmail(email);
@@ -94,5 +104,31 @@ export class AuthService {
     const user = await this.userService.findByEmail(googleUser.email);
     if (user) return user;
     return await this.userService.create(googleUser);
+  }
+
+  async verifyGoogleToken(token: string) {
+    try {
+      const ticket = await this.googleClient.verifyIdToken({
+        idToken: token,
+        audience: process.env.GOOGLE_CLIENT_ID,
+      });
+      const payload = ticket.getPayload();
+      return {
+        email: payload.email,
+        firstName: payload.given_name,
+        lastName: payload.family_name,
+        avatarUrl: payload.picture,
+      };
+    } catch {
+      throw new UnauthorizedException('Invalid Google token');
+    }
+  }
+
+  async register(user: CreateUserDto) {
+    const existingUser = await this.userService.findByEmail(user.email);
+    if (existingUser) {
+      throw new ConflictException('User with this email already exists');
+    }
+    return this.userService.create(user);
   }
 }

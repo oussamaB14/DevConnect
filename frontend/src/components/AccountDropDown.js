@@ -1,9 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import authService from '../Services/auth/authService';
 
 export default function AccountDropdown() {
   const [showAvatarMenu, setShowAvatarMenu] = useState(false);
   const menuRef = useRef(null);
+  const navigate = useNavigate();
+
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (menuRef.current && !menuRef.current.contains(event.target)) {
@@ -16,7 +19,12 @@ export default function AccountDropdown() {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
-  // Toggle menu state (make sure the callback form is used)
+
+  const handleLogout = () => {
+    authService.logout();
+    setShowAvatarMenu(false);
+    navigate('/signin');
+  };
 
   return (
     <>
@@ -106,11 +114,7 @@ export default function AccountDropdown() {
                   type="button"
                   className="flex w-full items-center gap-2 rounded-lg px-4 py-2 text-sm text-red-700 hover:bg-red-50"
                   role="menuitem"
-                  onClick={() => {
-                    // Add logout logic here
-                    console.log("Logging out");
-                    setShowAvatarMenu(false);
-                  }}
+                  onClick={handleLogout}
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"

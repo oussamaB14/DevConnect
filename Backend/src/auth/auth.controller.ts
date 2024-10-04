@@ -16,6 +16,7 @@ import { RefreshAuthGuard } from './guards/refresh-auth/refresh-auth.guard';
 import { JwtAuthGuard } from './guards/jwt-auth/jwt-auth.guard';
 import { Public } from './decorators/public.decorator';
 import { GoogleAuthGuard } from './guards/google-auth/google-auth.guard';
+import { Response } from 'express';
 
 @Controller('auth')
 export class AuthController {
@@ -26,6 +27,12 @@ export class AuthController {
   @Post('login')
   async login(@Request() req) {
     return this.authService.login(req.user.id);
+  }
+  @Public()
+  @HttpCode(HttpStatus.CREATED)
+  @Post('register')
+  async register(@Request() req) {
+    return this.authService.register(req.body);
   }
 
   @UseGuards(RefreshAuthGuard)
@@ -48,8 +55,15 @@ export class AuthController {
   @Public()
   @UseGuards(GoogleAuthGuard)
   @Get('google/callback')
-  async googleCallback(@Req() req, @Res() res) {
-    const response = await this.authService.login(req.user.id);
-    res.redirect(`http://localhost:5173?token=${response.accessToken}`);
+  async googleCallback(@Req() req, @Res() res: Response) {
+    const { accessToken, refreshToken } = await this.authService.login(
+      req.user.id,
+    );
+
+    // Redirect to frontend with tokens as URL parameters
+    const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:3000';
+    res.redirect(
+      `${frontendUrl}/auth/callback?accessToken=${accessToken}&refreshToken=${refreshToken}`,
+    );
   }
 }

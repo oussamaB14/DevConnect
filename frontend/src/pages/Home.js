@@ -2,7 +2,10 @@ import React, { useState } from "react";
 import PostHeader from "../components/posts/PostHeader";
 import SpeedDial from "../components/SpeedDial";
 import CreatePostModal from "../components/CreatePostModal"; // Make sure this import exists
-
+import Post from "../components/posts/Post";
+import FollowListCard from "../components/UsersToFollowCard";
+import ProjectsListCard from "../components/ProjectsListCard";
+import AnnouncementsCard from "../components/AnnouncementsCard";
 
 export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -41,6 +44,30 @@ export default function Home() {
       </div> */}
       <PostHeader onCreatePost={openModal} />
       <CreatePostModal isOpen={isModalOpen} onClose={closeModal} />
+      <div className="flex justify-between">
+        <div className="w-full lg:w-2/3 pr-0 lg:pr-4 md:w-3/4 md:pr-3 sm:landscape:w-3/4 sm:landscape:pr-3">
+          {/* List of posts */}
+          <Post />
+          <Post />
+          <Post />
+          <Post />
+          <Post />
+          <Post />
+          <Post />
+          <Post />
+          <Post />
+          <Post />
+
+          {/* Add more Post components here as needed */}
+        </div>
+        <div className="hidden lg:block w-1/3 pt-4 space-y-4">
+          {/* FollowListCard and future components */}
+          <FollowListCard />
+          <ProjectsListCard />
+          <AnnouncementsCard />
+          {/* Add more components here in the future */}
+        </div>
+      </div>
     </div>
   );
 }
