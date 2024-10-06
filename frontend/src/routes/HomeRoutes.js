@@ -9,7 +9,7 @@ export default function HomeRoutes() {
     <Routes>
       <Route element={<HomeLayout />}>
         <Route index element={<Home />} />
-        <Route path="/profile" element={<Profile />} />
+        <Route path="profile" element={<Profile />} />
       </Route>
     </Routes>
   );

@@ -6,7 +6,7 @@ import Post from "../components/posts/Post";
 import FollowListCard from "../components/UsersToFollowCard";
 import ProjectsListCard from "../components/ProjectsListCard";
 import AnnouncementsCard from "../components/AnnouncementsCard";
-
+import ArticlesList from "../components/ArticlesList";
 export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -65,6 +65,7 @@ export default function Home() {
           <FollowListCard />
           <ProjectsListCard />
           <AnnouncementsCard />
+          <ArticlesList />
           {/* Add more components here in the future */}
         </div>
       </div>

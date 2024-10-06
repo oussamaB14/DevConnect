@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import SignupImage from "../assets/images/DevConnect.(1)(1).png";
 
 export default function Signup() {
   return (
@@ -10,23 +11,29 @@ export default function Signup() {
             <div className="relative w-full bg-cover lg:w-6/12 xl:w-7/12 bg-gradient-to-r from-white via-white to-gray-100 dark:from-gray-800 dark:via-gray-800 dark:to-gray-700">
               <div className="relative flex flex-col items-center justify-center w-full h-full px-10 my-20 lg:px-16 lg:my-0">
                 <div className="flex flex-col items-start space-y-8 tracking-tight lg:max-w-3xl">
+                  <div className="relative w-full mb-8">
+                    <img
+                      src={SignupImage}
+                      alt="Feature illustration"
+                      className="w-full h-auto "
+                    />
+                  </div>
                   <div className="relative">
                     <p className="mb-2 font-medium text-gray-700 dark:text-gray-300 uppercase">
-                      Work smarter
+                      Join Us 
                     </p>
                     <h2 className="text-5xl font-bold text-gray-900 dark:text-white xl:text-6xl">
-                      Features to help you work smarter
+                      Join the DevConnect Community{" "}
                     </h2>
                   </div>
                   <p className="text-2xl text-gray-700 dark:text-gray-300">
-                    We've created a simple formula to follow in order to gain
-                    more out of your business and your application.
+                    Discover a world of possibilities with DevConnect.
                   </p>
                   <Link
                     to="#"
                     className="inline-block px-8 py-5 text-xl font-medium text-center text-white transition duration-200 bg-blue-600 rounded-lg hover:bg-blue-700 ease dark:bg-blue-500 dark:hover:bg-blue-600"
                   >
-                    Get Started Today
+                    Discover More 🚀
                   </Link>
                 </div>
               </div>

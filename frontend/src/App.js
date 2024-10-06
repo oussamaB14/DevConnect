@@ -8,6 +8,7 @@ import {
 import AppRoutes from "./routes/AppRoutes";
 import HomeRoutes from "./routes/HomeRoutes";
 import AuthCallback from "./Services/auth/AuthCallback";
+import ProtectedRoute from "./Services/auth/ProtectedRoutes";
 import { initFlowbite } from "./utils/flowbite-init";
 import authService from "./Services/auth/authService";
 
@@ -26,39 +27,36 @@ function App() {
     return () => window.removeEventListener("storage", checkAuth);
   }, []);
 
-  // function PrivateRoute({ children }) {
-  //   const location = useLocation();
-  //   console.log('PrivateRoute - isAuthenticated:', isAuthenticated);
-  //   if (!isAuthenticated) {
-  //     console.log('Redirecting to signin from:', location.pathname);
-  //     return <Navigate to="/signin" state={{ from: location }} replace />;
-  //   }
-  //   return children;
-  // }
-
-  function PublicRoute({ children }) {
-    console.log("PublicRoute - isAuthenticated:", isAuthenticated);
-    if (isAuthenticated) {
-      console.log("Redirecting to home from public route");
-      return <Navigate to="/home" replace />;
-    }
-    return children;
-  }
-
   return (
     <Router>
       <Routes>
-        <Route path="/home" element={<HomeRoutes />} />
+        {/* Public routes */}
+        <Route path="/*" element={<AppRoutes />} />
+        
+        {/* Protected routes */}
+        <Route
+          path="/home/*"
+          element={
+            <ProtectedRoute>
+              <HomeRoutes />
+            </ProtectedRoute>
+          }
+        />
+        
+        {/* Auth callback route */}
+        <Route path="/auth/callback" element={<AuthCallback />} />
+        
+        {/* Redirect authenticated users trying to access public routes */}
         <Route
           path="/*"
           element={
-            <PublicRoute>
-              <AppRoutes />
-            </PublicRoute>
+            isAuthenticated ? (
+              <Navigate to="/home" replace />
+            ) : (
+              <Navigate to="/" replace />
+            )
           }
         />
-        {/* <Route path="/home/*" element={<PrivateRoute><HomeRoutes /></PrivateRoute>} /> */}
-        <Route path="/auth/callback" element={<AuthCallback />} />
       </Routes>
     </Router>
   );

@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 
 export default function PostHeader({ onCreatePost }) {
   return (
@@ -13,13 +13,30 @@ export default function PostHeader({ onCreatePost }) {
           What's on your mind?
         </span>
       </div>
+
       <button
         onClick={onCreatePost}
-        className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-300"
+        className="flex items-center px-2 sm:px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-300"
         type="button"
       >
-        Create Post
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="h-5 w-5 mr-2"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <path d="M12 19l7-7 3 3-7 7-3-3z" />
+          <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z" />
+          <path d="M2 2l7.586 7.586" />
+          <circle cx="11" cy="11" r="2" />
+        </svg>
+        <span className="hidden sm:inline">Create Post</span>
+        <span className="sm:hidden">Post</span>
       </button>
     </div>
-  )
+  );
 }

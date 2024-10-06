@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import ThemeToggle from "./ThemeToggel";
 import AccountDropdown from "./AccountDropDown";
 import logo from "../assets/images/logo.png";
-
+import NotificationButton from "./NotificationIconButton";
 export default function HomeNavBar() {
   const [darkMode, setDarkMode] = useState(false);
 
@@ -51,8 +51,9 @@ export default function HomeNavBar() {
               </span>
             </Link>
           </div>
-          <div className="flex items-center">
+          <div className="flex items-center space-x-4">
             <ThemeToggle darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
+            <NotificationButton />
             <AccountDropdown />
           </div>
         </div>
