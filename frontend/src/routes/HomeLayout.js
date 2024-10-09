@@ -6,6 +6,7 @@ import { Outlet } from 'react-router-dom'
 export default function HomeLayout() {
   return (
     <div className="dark:bg-gray-900">
+    
       <HomeNavBar />
       <HomeSideBar />
       <div className="p-4 sm:ml-64">

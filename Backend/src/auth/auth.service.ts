@@ -90,9 +90,17 @@ export class AuthService {
   }
 
   async signOut(userId: number) {
+    console.log(`Sign out user with id ${userId}`);
+    const user = await this.userService.findOne(userId);
+    if (!user || !user.hashedRefreshToken) {
+      console.log(`User with id ${userId} not found or no refresh token`);
+      throw new UnauthorizedException('Invalid Refresh Token');
+    }
+    console.log(`Reset refresh token for user with id ${userId}`);
     await this.userService.updateHashedRefreshToken(userId, null);
-  }
 
+    return { message: `User with id ${userId} signed out`, id: userId };
+  }
   async validateJwtUser(userId: number) {
     const user = await this.userService.findOne(userId);
     if (!user) throw new UnauthorizedException('User not found!');
@@ -131,4 +139,10 @@ export class AuthService {
     }
     return this.userService.create(user);
   }
+  // async isTokenInvalidated(userId: number): Promise<boolean> {
+  //   // Check if the token has been invalidated in the database or cache
+  //   // For example, you can check a "token_invalidated" flag in the user's database record
+  //   const user = await this.userService.findOne(userId);
+  //   return user.tokenInvalidated;
+  // }
 }

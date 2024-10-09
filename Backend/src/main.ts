@@ -16,6 +16,12 @@ async function bootstrap() {
     PORT: port,
   });
 
+  app.enableCors({
+    origin: configService.get('FRONTEND_URL'),
+    methods: 'GET,POST,PUT,DELETE',
+    credentials: true,
+  });
+
   await app.listen(port);
   console.log(`Application is running on: http://localhost:3000/`);
 }

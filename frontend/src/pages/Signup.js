@@ -7,11 +7,11 @@ export default function Signup() {
     <>
       <section className="w-full bg-white dark:bg-gray-900">
         <div className="mx-auto max-w-7xl">
-          <div className="flex flex-col lg:flex-row">
+          <div className="flex flex-col lg:flex-row ">
             <div className="relative w-full bg-cover lg:w-6/12 xl:w-7/12 bg-gradient-to-r from-white via-white to-gray-100 dark:from-gray-800 dark:via-gray-800 dark:to-gray-700">
               <div className="relative flex flex-col items-center justify-center w-full h-full px-10 my-20 lg:px-16 lg:my-0">
-                <div className="flex flex-col items-start space-y-8 tracking-tight lg:max-w-3xl">
-                  <div className="relative w-full mb-8">
+                <div className="flex flex-col items-start space-y-8 tracking-tight lg:max-w-2xl">
+                  <div className="relative w-full mb-2  pt-10 md:pt-12">
                     <img
                       src={SignupImage}
                       alt="Feature illustration"
@@ -20,66 +20,36 @@ export default function Signup() {
                   </div>
                   <div className="relative">
                     <p className="mb-2 font-medium text-gray-700 dark:text-gray-300 uppercase">
-                      Join Us 
+                      Join Us
                     </p>
-                    <h2 className="text-5xl font-bold text-gray-900 dark:text-white xl:text-6xl">
-                      Join the DevConnect Community{" "}
+                    <h2 className="font-bold text-gray-900 dark:text-white xl:text-5xl">
+                      Join the DevConnect Community
                     </h2>
                   </div>
                   <p className="text-2xl text-gray-700 dark:text-gray-300">
                     Discover a world of possibilities with DevConnect.
                   </p>
-                  <Link
-                    to="#"
-                    className="inline-block px-8 py-5 text-xl font-medium text-center text-white transition duration-200 bg-blue-600 rounded-lg hover:bg-blue-700 ease dark:bg-blue-500 dark:hover:bg-blue-600"
-                  >
-                    Discover More 🚀
-                  </Link>
+                  <button className="mb-8 inline-block px-5 py-3 mt-3 text-lg font-bold text-white transition duration-200 bg-blue-600 rounded-lg hover:bg-blue-700 ">
+                    🚀 Discover more
+                  </button>
+                  <div className="h-8"></div>
                 </div>
               </div>
             </div>
 
-            <div className="w-full bg-white dark:bg-gray-900 lg:w-6/12 xl:w-5/12">
+            <div className="w-full bg-white dark:bg-gray-900 lg:w-6/12 xl:w-6/12">
               <div className="flex flex-col items-start justify-start w-full h-full p-10 lg:p-16 xl:p-24">
                 <h4 className="w-full text-3xl font-bold text-gray-900 dark:text-white">
-                  Signup
+                  👋 Welcome to DevConnect
                 </h4>
 
-                <div className="relative w-full mt-10 space-y-8">
+                <div className="w-full mt-10 space-y-8">
                   <div className="relative">
-                    <label className="font-medium text-gray-900 dark:text-white">
-                      Name
-                    </label>
-                    <input
-                      type="text"
-                      className="block w-full px-4 py-4 mt-2 text-xl placeholder-gray-400 bg-gray-200 rounded-lg focus:outline-none focus:ring-4 focus:ring-blue-600 focus:ring-opacity-50 dark:bg-gray-700 dark:text-white dark:placeholder-gray-300"
-                      placeholder="Enter Your Name"
-                    />
-                  </div>
-                  <div className="relative">
-                    <label className="font-medium text-gray-900 dark:text-white">
-                      Email
-                    </label>
-                    <input
-                      type="email"
-                      className="block w-full px-4 py-4 mt-2 text-xl placeholder-gray-400 bg-gray-200 rounded-lg focus:outline-none focus:ring-4 focus:ring-blue-600 focus:ring-opacity-50 dark:bg-gray-700 dark:text-white dark:placeholder-gray-300"
-                      placeholder="Enter Your Email Address"
-                    />
-                  </div>
-                  <div className="relative">
-                    <label className="font-medium text-gray-900 dark:text-white">
-                      Password
-                    </label>
-                    <input
-                      type="password"
-                      className="block w-full px-4 py-4 mt-2 text-xl placeholder-gray-400 bg-gray-200 rounded-lg focus:outline-none focus:ring-4 focus:ring-blue-600 focus:ring-opacity-50 dark:bg-gray-700 dark:text-white dark:placeholder-gray-300"
-                      placeholder="Password"
-                    />
-                  </div>
-                  <div className="relative">
-                    <button className="inline-block w-full px-5 py-4 text-lg font-medium text-center text-white transition duration-200 bg-blue-600 rounded-lg hover:bg-blue-700 ease dark:bg-blue-500 dark:hover:bg-blue-600">
-                      Create Account
-                    </button>
+                    <Link to="/user-register">
+                      <button className="inline-block w-full px-5 py-4 text-lg font-medium text-center text-white transition duration-200 bg-blue-600 rounded-lg hover:bg-blue-700 ease dark:bg-blue-500 dark:hover:bg-blue-600">
+                        Create an Account
+                      </button>
+                    </Link>
                     <button className="w-full px-5 py-4 mt-3 text-lg font-bold text-center text-gray-900 transition duration-200 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 ease flex items-center justify-center dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700">
                       <svg
                         className="w-6 h-6 mr-2"

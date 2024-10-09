@@ -44,6 +44,11 @@ const authService = {
     window.dispatchEvent(new Event('storage'));
   },
 
+  // clearTokens: () => {
+  //   console.log("Clearing tokens");
+  //   localStorage.removeItem('user');
+  // },
+
   isAuthenticated: () => {
     const tokens = authService.getTokens();
     const isAuth = !!tokens?.accessToken;
@@ -55,6 +60,23 @@ const authService = {
     window.location.href = `${API_URL}auth/google/login`;
   },
 
+  getUserInfo: async () => {
+    const tokens = authService.getTokens();
+    if (!tokens) {
+      console.error('No tokens available');
+      return null;
+    }
+    try {
+      const response = await axios.get(`${API_URL}user/info`, {
+        headers: { Authorization: `Bearer ${tokens.accessToken}` }
+      });
+      console.log('User info received:', response.data);
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching user info:', error);
+      return null;
+    }
+  },
   // ... other methods ...
 };
 

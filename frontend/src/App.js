@@ -11,6 +11,7 @@ import AuthCallback from "./Services/auth/AuthCallback";
 import ProtectedRoute from "./Services/auth/ProtectedRoutes";
 import { initFlowbite } from "./utils/flowbite-init";
 import authService from "./Services/auth/authService";
+import { AuthProvider } from "./context/AuthContext";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -28,37 +29,40 @@ function App() {
   }, []);
 
   return (
-    <Router>
-      <Routes>
-        {/* Public routes */}
-        <Route path="/*" element={<AppRoutes />} />
-        
-        {/* Protected routes */}
-        <Route
-          path="/home/*"
-          element={
-            <ProtectedRoute>
-              <HomeRoutes />
-            </ProtectedRoute>
-          }
-        />
-        
-        {/* Auth callback route */}
-        <Route path="/auth/callback" element={<AuthCallback />} />
-        
-        {/* Redirect authenticated users trying to access public routes */}
-        <Route
-          path="/*"
-          element={
-            isAuthenticated ? (
-              <Navigate to="/home" replace />
-            ) : (
-              <Navigate to="/" replace />
-            )
-          }
-        />
-      </Routes>
-    </Router>
+    <AuthProvider>
+      {" "}
+      <Router>
+        <Routes>
+          {/* Public routes */}
+          <Route path="/*" element={<AppRoutes />} />
+
+          {/* Protected routes */}
+          <Route
+            path="/home/*"
+            element={
+              <ProtectedRoute>
+                <HomeRoutes />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* Auth callback route */}
+          <Route path="/auth/callback" element={<AuthCallback />} />
+
+          {/* Redirect authenticated users trying to access public routes */}
+          <Route
+            path="/*"
+            element={
+              isAuthenticated ? (
+                <Navigate to="/home" replace />
+              ) : (
+                <Navigate to="/" replace />
+              )
+            }
+          />
+        </Routes>
+      </Router>
+    </AuthProvider>
   );
 }
 
