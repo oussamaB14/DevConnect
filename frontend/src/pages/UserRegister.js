@@ -1,7 +1,26 @@
 import { Link } from "react-router-dom";
 import logo from "../assets/images/logo.png";
+import React, { useState } from "react";
 
+import { useAuth } from "../context/AuthContext";
 function UserRegister() {
+  const { signup } = useAuth();
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [passwordConfirmation, setPasswordConfirmation] = useState("");
+  //const [error, setError] = useState(null);
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    try {
+      await signup(firstName, lastName, email, password, passwordConfirmation);
+    } catch (error) {
+      //setError(error.message);
+    }
+  };
   return (
     // <section class="py-4 px-10 bg-white dark:bg-gray-900 rounded-lg shadow-lg dark:text-white">
     //   <h2 class="text-xl font-bold mb-4">Get started with DevConnect</h2>
@@ -205,7 +224,10 @@ function UserRegister() {
             </h1>
 
             <p className="mt-4 leading-relaxed text-gray-500 dark:text-gray-300">
-              Join a community of developers, designers, and entrepreneurs who are passionate about building the next generation of web applications. Share your projects, get feedback, and learn from others.
+              Join a community of developers, designers, and entrepreneurs who
+              are passionate about building the next generation of web
+              applications. Share your projects, get feedback, and learn from
+              others.
             </p>
 
             <form action="#" className="mt-8 grid grid-cols-6 gap-6">
@@ -220,6 +242,8 @@ function UserRegister() {
                   type="text"
                   id="FirstName"
                   name="first_name"
+                  value={firstName}
+                  onChange={(event) => setFirstName(event.target.value)}
                   className="bg-gray-50 dark:bg-gray-700 border border-gray-300 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 />
               </div>
@@ -236,6 +260,8 @@ function UserRegister() {
                   type="text"
                   id="LastName"
                   name="last_name"
+                  value={lastName}
+                  onChange={(event) => setLastName(event.target.value)}
                   className="bg-gray-50 dark:bg-gray-700 border border-gray-300 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 />
               </div>
@@ -253,6 +279,8 @@ function UserRegister() {
                   type="email"
                   id="Email"
                   name="email"
+                  value={email}
+                  onChange={(event) => setEmail(event.target.value)}
                   className="bg-gray-50 dark:bg-gray-700 border border-gray-300 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 />
               </div>
@@ -270,6 +298,8 @@ function UserRegister() {
                   type="password"
                   id="Password"
                   name="password"
+                  value={password}
+                  onChange={(event) => setPassword(event.target.value)}
                   className="bg-gray-50 dark:bg-gray-700 border border-gray-300 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 />
               </div>
@@ -286,6 +316,10 @@ function UserRegister() {
                   type="password"
                   id="PasswordConfirmation"
                   name="password_confirmation"
+                  value={passwordConfirmation}
+                  onChange={(event) =>
+                    setPasswordConfirmation(event.target.value)
+                  }
                   className="bg-gray-50 dark:bg-gray-700 border border-gray-300 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 />
               </div>
@@ -335,14 +369,17 @@ function UserRegister() {
               </div> */}
 
               <div className="col-span-6 sm:flex sm:items-center sm:gap-4">
-                <button className="inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500 dark:bg-blue-500 dark:hover:bg-blue-700 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <button
+                  className="inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500 dark:bg-blue-500 dark:hover:bg-blue-700 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  onClick={handleSubmit}
+                >
                   Create an account
                 </button>
 
                 <p className="mt-4 text-sm text-gray-500 sm:mt-0 dark:text-gray-300">
                   Already have an account?
                   <Link
-                    to="/login"
+                    to="/signin"
                     className="text-gray-700 underline dark:text-white"
                   >
                     Log in

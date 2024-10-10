@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import AccountDropdown from "./AccountDropDown";
+//import AccountDropdown from "./AccountDropDown";
 import ThemeToggle from "./ThemeToggel";
 import logo from "../assets/images/logo.png";
 const Navbar = () => {
@@ -123,7 +123,7 @@ const Navbar = () => {
                 Sign Up
               </Link>
             </div>
-            <AccountDropdown />
+            {/* <AccountDropdown /> */}
           </div>
         </div>
         <div

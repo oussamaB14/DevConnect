@@ -1,6 +1,13 @@
-import { Entity, Column, PrimaryGeneratedColumn, BeforeInsert } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  BeforeInsert,
+  OneToMany,
+} from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { Role } from 'src/auth/enums/role.enum';
+import { Post } from 'src/post/entities/post.entity';
 
 @Entity()
 export class User {
@@ -22,9 +29,21 @@ export class User {
   @Column()
   avatarUrl: string;
 
+  @Column()
+  bio: string;
+  @Column('simple-array')
+  followers: string[];
+
+  @Column({ nullable: true, default: 0 })
+  following: string;
+
   @Column({ nullable: true })
   hashedRefreshToken: string;
 
+  @Column()
+  location: string;
+  @OneToMany(() => Post, (post) => post.author)
+  posts: Post[];
   @Column({
     type: 'enum',
     enum: Role,

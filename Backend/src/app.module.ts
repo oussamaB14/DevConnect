@@ -8,6 +8,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import dbConfig from './config/db.config';
 import productionDbConfig from './config/db.config.production';
 import { GoogleStrategy } from './auth/strategies/google.strategy';
+import { PostModule } from './post/post.module';
 import googleOauthConfig from './auth/config/google-oauth.config';
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import googleOauthConfig from './auth/config/google-oauth.config';
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: (configService: ConfigService) => {
+        console.log('NODE_ENV:', process.env.NODE_ENV);
         return process.env.NODE_ENV === 'production'
           ? configService.get('dbconfig.production')
           : configService.get('dbconfig.dev');
@@ -28,6 +30,7 @@ import googleOauthConfig from './auth/config/google-oauth.config';
       inject: [ConfigService],
     }),
     UserModule,
+    PostModule,
   ],
   controllers: [AppController],
   providers: [AppService, GoogleStrategy],

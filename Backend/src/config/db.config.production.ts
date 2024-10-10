@@ -1,3 +1,4 @@
+import { Post } from 'src/post/entities/post.entity';
 import { User } from 'src/user/entities/user.entity';
 import { MysqlConnectionOptions } from 'typeorm/driver/mysql/MysqlConnectionOptions';
 
@@ -8,7 +9,7 @@ export default (): MysqlConnectionOptions => ({
   username: process.env.DB_USERNAME,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_DATABASE,
-  entities: [User],
+  entities: [User, Post],
   synchronize: false, // Set to false in production
   logging: ['error'], // Log only errors in production
   ssl: {
