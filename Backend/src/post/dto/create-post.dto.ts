@@ -1,5 +1,6 @@
-import { IsEnum, IsString } from 'class-validator';
+import { IsEnum, IsObject, IsString } from 'class-validator';
 import { PostType } from '../enums/postType.enum';
+//import { User } from 'src/user/entities/user.schema';
 
 export class CreatePostDto {
   @IsString()
@@ -11,6 +12,6 @@ export class CreatePostDto {
   @IsEnum(PostType)
   readonly type: PostType;
 
-  @IsString()
-  readonly authorId: string;
+  @IsObject()
+  readonly author: any;
 }
