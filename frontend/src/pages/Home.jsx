@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import PostHeader from "../components/posts/PostHeader";
 import SpeedDial from "../components/SpeedDial";
-import CreatePostModal from "../components/CreatePostModal"; // Make sure this import exists
 import Post from "../components/posts/Post";
 import FollowListCard from "../components/UsersToFollowCard";
 import ProjectsListCard from "../components/ProjectsListCard";
 import AnnouncementsCard from "../components/AnnouncementsCard";
 import ArticlesList from "../components/ArticlesList";
+import CreatePostModal from "../components/posts/CreatePostModal";
 export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 

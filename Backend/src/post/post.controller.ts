@@ -12,14 +12,17 @@ import {
 import { PostService } from './post.service';
 import { CreatePostDto } from './dto/create-post.dto';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth/jwt-auth.guard';
+import { GoogleAuthGuard } from 'src/auth/guards/google-auth/google-auth.guard';
+import { AuthGuard } from 'src/auth/guards/Auth-Guard';
 //import { GoogleAuthGuard } from 'src/auth/guards/google-auth/google-auth.guard';
 //import { UpdatePostDto } from './dto/update-post.dto';
 
 @Controller('post')
+@UseGuards(AuthGuard)
 export class PostController {
   constructor(private readonly postService: PostService) {}
   //@UseGuards(GoogleAuthGuard)
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, GoogleAuthGuard)
   @Post('add')
   async create(@Body() createPostDto: CreatePostDto, @Request() req) {
     if (!req.user) {

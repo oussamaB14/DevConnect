@@ -23,7 +23,7 @@ import { PassportModule } from '@nestjs/passport';
 @Module({
   imports: [
     MongooseModule.forFeature([{ name: 'User', schema: UserSchema }]),
-    PassportModule.register({ defaultStrategy: 'local' }),
+    PassportModule.register({ defaultStrategy: 'google' }),
     JwtModule.registerAsync(jwtConfig.asProvider()),
     ConfigModule.forFeature(jwtConfig),
     ConfigModule.forFeature(refreshJwtConfig),

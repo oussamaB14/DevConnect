@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import authService from '../Services/auth/authService';
+import authService from "../Services/auth/authService";
+import { useAuth } from "../context/AuthContext";
 
 export default function AccountDropdown() {
   const [showAvatarMenu, setShowAvatarMenu] = useState(false);
@@ -19,11 +20,21 @@ export default function AccountDropdown() {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+  const { user, loading } = useAuth();
+
+  if (loading)
+    return (
+      <img
+        className="w-8 h-8 rounded-full"
+        src={"https://avatars.githubusercontent.com/u/33694049?s=200&v=4"}
+        alt="User avatar"
+      />
+    );
 
   const handleLogout = () => {
     authService.logout();
     setShowAvatarMenu(false);
-    navigate('/signin');
+    navigate("/signin");
   };
 
   return (
@@ -44,7 +55,10 @@ export default function AccountDropdown() {
             <span className="sr-only">Open user menu</span>
             <img
               className="w-8 h-8 rounded-full"
-              src="https://img.freepik.com/photos-gratuite/portrait-homme-riant_23-2148859448.jpg?size=338&ext=jpg&ga=GA1.1.2008272138.1727222400&semt=ais_hybrid"
+              src={
+                user.avatarUrl ||
+                "https://avatars.githubusercontent.com/u/33694049?s=200&v=4"
+              }
               alt="User avatar"
             />
           </button>

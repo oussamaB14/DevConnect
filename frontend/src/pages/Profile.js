@@ -15,11 +15,11 @@ export default function Profile() {
         <div className="flex items-center space-x-6 mb-4">
           <img
             className="h-24 w-24 rounded-full"
-            src={user.picture || "https://via.placeholder.com/150"}
+            src={user.avatarUrl || "https://via.placeholder.com/150"}
             alt="Profile"
           />
           <div>
-            <h2 className="text-2xl font-bold dark:text-white">{user.name || 'No Name'}</h2>
+            <h2 className="text-2xl font-bold dark:text-white">{user.firstName || 'No Name'}</h2>
             <p className="text-gray-700 dark:text-gray-300">
               {user.email || 'No Email'}
             </p>

@@ -1,12 +1,21 @@
 import React from "react";
-
+import { useAuth } from "./../../context/AuthContext";
 export default function PostHeader({ onCreatePost }) {
+  const { user, loading } = useAuth();
+  if (loading)
+    return (
+      <img
+        className="w-8 h-8 rounded-full"
+        src={"https://avatars.githubusercontent.com/u/33694049?s=200&v=4"}
+        alt="User avatar"
+      />
+    );
   return (
     <div className="flex items-center justify-between p-4 bg-white dark:bg-gray-800 shadow-md rounded-lg">
       <div className="flex items-center space-x-4">
         <img
           className="w-10 h-10 rounded-full"
-          src="https://img.freepik.com/photos-gratuite/portrait-homme-riant_23-2148859448.jpg?size=338&ext=jpg&ga=GA1.1.2008272138.1727222400&semt=ais_hybrid"
+          src={user.avatarUrl || "https://via.placeholder.com/150"}
           alt="User profile"
         />
         <span className="text-lg font-semibold text-gray-700 dark:text-gray-200">
