@@ -16,7 +16,7 @@ export default function Home() {
   const closeModal = () => setIsModalOpen(false);
 
   return (
-    <div>
+    <PostProvider>
       <SpeedDial />
 
       {/* <div className="p-4 sm:ml-64">
@@ -50,9 +50,7 @@ export default function Home() {
       <div className="flex justify-between">
         <div className="w-full lg:w-2/3 pr-0 lg:pr-4 md:w-3/4 md:pr-3 sm:landscape:w-3/4 sm:landscape:pr-3">
           {/* List of posts */}
-          <PostProvider>
-            <Post />
-          </PostProvider>
+          <Post />
           {/* Add more Post components here as needed */}
         </div>
         <div className="hidden lg:block w-1/3 pt-4 space-y-4">
@@ -64,6 +62,6 @@ export default function Home() {
           {/* Add more components here in the future */}
         </div>
       </div>
-    </div>
+    </PostProvider>
   );
 }

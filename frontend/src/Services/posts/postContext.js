@@ -34,6 +34,7 @@ export const PostProvider = ({ children }) => {
     try {
       const newPost = await postService.createPost(postData);
       setPosts((prevPosts) => [newPost, ...prevPosts]);
+      console.log("New post added:", newPost); // Log the newly added post
     } catch (err) {
       setError(err);
     } finally {

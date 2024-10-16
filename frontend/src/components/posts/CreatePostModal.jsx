@@ -1,16 +1,22 @@
 import React from "react";
 import * as Yup from "yup";
-import axios from "axios";
-import { ErrorMessage, Field, Formik } from "formik";
+import { ErrorMessage, Field, Formik ,Form} from "formik";
+import { usePost } from "../../Services/posts/postContext";
 // Import the model for the post types
 
 const CreatePostModal = ({ isOpen, onClose }) => {
-  if (!isOpen) return null;
-  // Convert PostType enum to a plain JavaScript object
+  const { createPost } = usePost();
   const PostType = {
     PROJECT: "PROJECT",
     POST: "POST",
   };
+  const initialValues = {
+    title: "",
+    content: "",
+    type: PostType.POST,
+    linkUrl: "",
+  };
+  // Convert PostType enum to a plain JavaScript object
 
   // Define the validation schema using Yup
   const validationSchema = Yup.object({
@@ -28,52 +34,25 @@ const CreatePostModal = ({ isOpen, onClose }) => {
   });
 
   // Initial form values
-  const initialValues = {
-    id: "",
-    title: "",
-    content: "",
-    createdAt: "",
-    author: "",
-    comments: [],
-    likes: [],
-    shares: [],
-    media: [],
-    type: PostType.POST,
-    linkUrl: "",
-  };
 
-  const onSubmit = async (values, { resetForm }) => {
+  const onSubmit = async (values, { setSubmitting, resetForm }) => {
     try {
       // Make a POST request to the backend to create a new post
-      await axios.post("http://localhost:3000/post/add", values, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`, // Assuming JWT token is stored in localStorage
-        },
-      });
-      console.log('Request:', {
-        method: 'POST',
-        url: 'http://localhost:3000/post/add',
-        data: values,
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
-        },
-      });
-      console.log('Headers:', {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
-        },
-      });
-      console.log(`Bearer ${localStorage.getItem("token")}`);
-
+      await createPost(values);
+      console.log(values);
       // Reset the form after successful submission
       resetForm();
       alert("Post created successfully!");
+      onClose();
     } catch (error) {
       console.error("Error creating post:", error);
       alert("Failed to create post.");
+    } finally {
+      setSubmitting(false);
     }
   };
 
+  if (!isOpen) return null;
   return (
     <>
       <div className="fixed inset-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto outline-none focus:outline-none">
@@ -115,7 +94,7 @@ const CreatePostModal = ({ isOpen, onClose }) => {
               onSubmit={onSubmit}
             >
               {({ values, isSubmitting }) => (
-                <form className="p-4 md:p-5">
+                <Form className="p-4 md:p-5">
                   <div className="grid gap-4 mb-4 grid-cols-2">
                     <div className="col-span-2">
                       <label
@@ -198,7 +177,6 @@ const CreatePostModal = ({ isOpen, onClose }) => {
                     disabled={isSubmitting}
                     className="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                   >
-                    {isSubmitting ? "Creating..." : "Create Post"}
                     <svg
                       className="me-1 -ms-1 w-5 h-5"
                       fill="currentColor"
@@ -210,10 +188,10 @@ const CreatePostModal = ({ isOpen, onClose }) => {
                         d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
                         clipRule="evenodd"
                       ></path>
-                    </svg>
-                    Create post
+                    </svg>{" "}
+                    {isSubmitting ? "Creating..." : "Create Post"}
                   </button>
-                </form>
+                </Form>
               )}
             </Formik>
           </div>
