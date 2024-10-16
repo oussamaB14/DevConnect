@@ -11,18 +11,20 @@ import {
 } from '@nestjs/common';
 import { PostService } from './post.service';
 import { CreatePostDto } from './dto/create-post.dto';
-import { JwtAuthGuard } from 'src/auth/guards/jwt-auth/jwt-auth.guard';
-import { GoogleAuthGuard } from 'src/auth/guards/google-auth/google-auth.guard';
 import { AuthGuard } from 'src/auth/guards/Auth-Guard';
-//import { GoogleAuthGuard } from 'src/auth/guards/google-auth/google-auth.guard';
-//import { UpdatePostDto } from './dto/update-post.dto';
+import { Public } from 'src/auth/decorators/public.decorator';
 
 @Controller('post')
-@UseGuards(AuthGuard)
 export class PostController {
   constructor(private readonly postService: PostService) {}
-  //@UseGuards(GoogleAuthGuard)
-  @UseGuards(JwtAuthGuard, GoogleAuthGuard)
+
+  @Get('all-posts')
+  @Public()
+  findAll() {
+    return this.postService.findAll();
+  }
+
+  @UseGuards(AuthGuard)
   @Post('add')
   async create(@Body() createPostDto: CreatePostDto, @Request() req) {
     if (!req.user) {
@@ -30,11 +32,6 @@ export class PostController {
     }
     const author = req.user;
     return this.postService.create(createPostDto, author);
-  }
-
-  @Get('all-posts')
-  findAll() {
-    return this.postService.findAll();
   }
 
   @Get(':id')
