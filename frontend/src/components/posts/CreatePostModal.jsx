@@ -1,7 +1,8 @@
 import React from "react";
 import * as Yup from "yup";
-import { ErrorMessage, Field, Formik ,Form} from "formik";
+import { ErrorMessage, Field, Formik, Form } from "formik";
 import { usePost } from "../../Services/posts/postContext";
+import ToastComponent from "../Toasts/ToastComponent";
 // Import the model for the post types
 
 const CreatePostModal = ({ isOpen, onClose }) => {
@@ -42,8 +43,15 @@ const CreatePostModal = ({ isOpen, onClose }) => {
       console.log(values);
       // Reset the form after successful submission
       resetForm();
-      alert("Post created successfully!");
       onClose();
+// Show a toast notification after closing the post modal to indicate successful update
+const showToast = () => {
+  // Call the ToastComponent to display a success message
+  <ToastComponent message="Post updated successfully" />;
+};
+
+onClose();
+showToast();
     } catch (error) {
       console.error("Error creating post:", error);
       alert("Failed to create post.");
@@ -87,6 +95,7 @@ const CreatePostModal = ({ isOpen, onClose }) => {
                 <span className="sr-only">Close modal</span>
               </button>
             </div>
+
             {/* Modal body */}
             <Formik
               initialValues={initialValues}
