@@ -44,7 +44,22 @@ export class PostService {
   // update(id: number, updatePostDto: UpdatePostDto) {
   //   return `This action updates a #${id} post`;
   // }
-
+  async findByUserId(userId: string): Promise<Post[]> {
+    console.log('User ID received:', userId);
+    const id = userId.replace('id=', '');
+    return this.userModel.findById(id).then((user) => {
+      if (!user) {
+        return [];
+      }
+      return this.postModel
+        .find({ _id: { $in: user.posts } })
+        .exec()
+        .then((posts) => {
+          console.log('Found posts:', posts);
+          return posts;
+        });
+    });
+  }
   async remove(id: number): Promise<void> {
     const post = await this.postModel.findOne({ where: { id } });
     await post.deleteOne();

@@ -41,6 +41,18 @@ export const PostProvider = ({ children }) => {
       setLoading(false);
     }
   };
+  const fetchUserPosts = async (userId) => {
+    setLoading(true);
+    setError(null);
+    try {
+      const data = await postService.getPostsByUserId(userId);
+      setPosts(data);
+    } catch (err) {
+      setError(err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   // Fetch posts when the component mounts
   useEffect(() => {
@@ -50,7 +62,14 @@ export const PostProvider = ({ children }) => {
 
   return (
     <PostContext.Provider
-      value={{ posts, loading, error, createPost, fetchPosts }}
+      value={{
+        posts,
+        loading,
+        error,
+        createPost,
+        fetchPosts,
+        fetchUserPosts,
+      }}
     >
       {children}
     </PostContext.Provider>

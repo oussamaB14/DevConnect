@@ -1,8 +1,15 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { useAuth } from "../context/AuthContext";
+import { Navigate } from "react-router-dom";
+import ProfilePosts from "./posts/ProfilePosts";
 
 export function ProfileTabs() {
   const [activeTab, setActiveTab] = useState("Posts");
+  const { user, loading } = useAuth();
+  // const posts = user.posts;
+  if (loading) return <div>Loading...</div>;
+  if (!user) return <Navigate to="/home" />;
 
   return (
     <div>
@@ -46,12 +53,14 @@ export function ProfileTabs() {
       <div className="mt-4">
         {activeTab === "Posts" && (
           <p className="text-gray-700 dark:text-gray-300">
-            Settings content goes here.
+            <ul className="space-y-3">
+              <ProfilePosts />
+            </ul>
           </p>
         )}
         {activeTab === "Projects" && (
           <p className="text-gray-700 dark:text-gray-300">
-            Messages content goes here.
+            Projects here
           </p>
         )}
       </div>

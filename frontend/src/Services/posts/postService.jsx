@@ -54,6 +54,16 @@ const postService = {
       throw error;
     }
   },
+  
+  getPostsByUserId: async (userId) => {
+    try {
+      const response = await axios.get(`${API_URL}post/user-posts/${userId}`);
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching posts by user id:", error);
+      throw error;
+    }
+  },
 };
 
 export default postService;

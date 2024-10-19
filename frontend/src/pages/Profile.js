@@ -1,6 +1,7 @@
 import React from "react";
 import { ProfileTabs } from "../components/ProfileTabs";
 import { useAuth } from "../context/AuthContext";
+import { PostProvider } from "../Services/posts/postContext";
 //import { Navigate } from "react-router-dom";
 
 export default function Profile() {
@@ -19,17 +20,23 @@ export default function Profile() {
             alt="Profile"
           />
           <div>
-            <h2 className="text-2xl font-bold dark:text-white">{user.firstName || 'No Name'}</h2>
+            <h2 className="text-2xl font-bold dark:text-white">
+              {user.firstName || "No Name"}
+            </h2>
             <p className="text-gray-700 dark:text-gray-300">
-              {user.email || 'No Email'}
+              {user.email || "No Email"}
             </p>
-            <p className="text-gray-600 dark:text-gray-400">{user.location || 'No Location'}</p>
+            <p className="text-gray-600 dark:text-gray-400">
+              {user.location || "No Location"}
+            </p>
           </div>
         </div>
         <p className="text-gray-700 dark:text-gray-300 mb-6">
-          {user.bio || 'No bio available'}
+          {user.bio || "No bio available"}
         </p>
-        <ProfileTabs />
+        <PostProvider>
+          <ProfileTabs />
+        </PostProvider>
       </div>
     </div>
   );

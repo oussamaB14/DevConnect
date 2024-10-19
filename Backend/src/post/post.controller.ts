@@ -23,6 +23,10 @@ export class PostController {
   findAll() {
     return this.postService.findAll();
   }
+  @Get('user-posts/:id')
+  findByUserId(@Param('id') id: string) {
+    return this.postService.findByUserId(id);
+  }
 
   @UseGuards(AuthGuard)
   @Post('add')

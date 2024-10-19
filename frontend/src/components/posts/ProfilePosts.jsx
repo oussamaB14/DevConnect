@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useAuth } from "../../context/AuthContext";
 import { usePost } from "../../Services/posts/postContext";
-
 export default function Post() {
   const [isLiked, setIsLiked] = useState(false);
   const [isBookmarked, setIsBookmarked] = useState(false);
@@ -8,11 +8,16 @@ export default function Post() {
 
   const [showCommentInput, setShowCommentInput] = useState(false);
   const [commentText, setCommentText] = useState("");
-  const { posts, loading, error } = usePost();
+  const { fetchUserPosts, posts } = usePost();
+  const { user, loading, error } = useAuth();
+  useEffect(() => {
+    if (user && user._id) {
+        fetchUserPosts(user._id); // Call fetchUserPosts with the user ID
+    }
+  }, [user, fetchUserPosts]);
 
   if (loading) return <p>Loading posts...</p>;
   if (error) return <p>Error fetching posts: {error.message}</p>;
-
   const handleCommentSubmit = () => {
     console.log("Comment submitted:", commentText);
     setCommentText("");
@@ -24,20 +29,16 @@ export default function Post() {
       {Array.isArray(posts) && posts.length > 0 ? (
         posts.map((post) => (
           <div
-            key={post.id}
+            key={post._id}
             className="w-full max-w-3xl border rounded-lg shadow-sm mt-4 mr-0 dark:bg-gray-800 dark:border-gray-700"
           >
             <div className="p-4 flex flex-row items-center gap-4">
               <div className="w-10 h-10 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
-                <img src={post.author?._id.avatarUrl} alt="User avatar" ></img>
+                <img src={user.avatarUrl} alt="User avatar"></img>
               </div>
               <div className="flex-1">
                 <h3 className="text-lg font-semibold dark:text-white">
-                  {post.author &&
-                  post.author._id.firstName &&
-                  post.author._id.lastName
-                    ? `${post.author._id.firstName} ${post.author._id.lastName}`
-                    : "Unknown"}
+                  {user.firstName} {user.lastName}
                 </h3>
                 <p className="text-sm text-gray-600 dark:text-gray-300">
                   Software Engineer at Tech Co.
@@ -115,10 +116,12 @@ export default function Post() {
               </div>
             </div>
             <div className="px-4 py-2">
-              <h1 className="dark:text-gray-300 font-bold pb-2">
-                {post.title}
-              </h1>
-              <p className="dark:text-gray-300">{post.content}</p>
+              {
+                <h1 className="dark:text-gray-300 font-bold pb-2">
+                  {post.title}
+                </h1>
+              }
+              {<p className="dark:text-gray-300">{post.content}</p>}
             </div>
             <div className="px-4 py-2 flex justify-between border-t dark:border-gray-700">
               <button
