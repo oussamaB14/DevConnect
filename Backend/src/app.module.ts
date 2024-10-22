@@ -11,6 +11,7 @@ import { GoogleStrategy } from './auth/strategies/google.strategy';
 import { PostModule } from './post/post.module';
 import googleOauthConfig from './auth/config/google-oauth.config';
 import { MongooseModule } from '@nestjs/mongoose';
+import { CommentModule } from './comment/comment.module';
 @Module({
   imports: [
     AuthModule,
@@ -35,6 +36,7 @@ import { MongooseModule } from '@nestjs/mongoose';
     }),
     UserModule,
     PostModule,
+    CommentModule,
   ],
   controllers: [AppController],
   providers: [AppService, GoogleStrategy],

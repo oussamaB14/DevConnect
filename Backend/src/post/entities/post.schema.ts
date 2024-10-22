@@ -20,6 +20,9 @@ export class Post extends Document {
   @Prop({ type: [String], default: [] })
   shares: string[];
 
+  @Prop({ type: [{ type: Types.ObjectId, ref: 'Comment' }], default: [] })
+  comments: Types.ObjectId[]; // Array of comment references
+
   @Prop({ type: [String], default: [] })
   media: string[];
 

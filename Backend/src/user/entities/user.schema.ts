@@ -30,6 +30,9 @@ export class User extends Document {
   @Prop({ default: 0 })
   following: string;
 
+  @Prop({ type: [{ type: Types.ObjectId, ref: 'Post' }] })
+  bookmarks: Types.ObjectId[] | Post[];
+
   @Prop({ type: String, default: null })
   hashedRefreshToken: string;
 
