@@ -24,13 +24,16 @@ export class User extends Document {
   @Prop({ default: null })
   bio: string;
 
+  @Prop({ default: null })
+  position: string;
+
   @Prop({ type: [String], default: [] })
   followers: string[];
 
   @Prop({ default: 0 })
   following: string;
 
-  @Prop({ type: [{ type: Types.ObjectId, ref: 'Post' }] })
+  @Prop({ type: [{ type: Types.ObjectId, ref: 'Post' }] })n
   bookmarks: Types.ObjectId[] | Post[];
 
   @Prop({ type: String, default: null })

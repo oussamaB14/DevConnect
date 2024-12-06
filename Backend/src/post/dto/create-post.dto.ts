@@ -1,6 +1,6 @@
 import { IsEnum, IsObject, IsOptional, IsString } from 'class-validator';
 import { PostType } from '../enums/postType.enum';
-//import { User } from 'src/user/entities/user.schema';
+import { User } from 'src/user/entities/user.schema';
 
 export class CreatePostDto {
   @IsString()
@@ -17,5 +17,5 @@ export class CreatePostDto {
   readonly linkUrl?: string;
 
   @IsObject()
-  readonly author: any;
+  readonly author: User;
 }

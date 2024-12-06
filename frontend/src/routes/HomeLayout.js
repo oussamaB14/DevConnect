@@ -1,12 +1,11 @@
-import React from 'react'
-import HomeNavBar from '../components/HomeNavBar'
-import HomeSideBar from '../components/HomeSideBar'
-import { Outlet } from 'react-router-dom'   
+import React from "react";
+import { Outlet } from "react-router-dom";
+import HomeNavBar from "../components/HomeNavBar";
+import HomeSideBar from "../components/HomeSideBar";
 
 export default function HomeLayout() {
   return (
     <div className="dark:bg-gray-900">
-    
       <HomeNavBar />
       <HomeSideBar />
       <div className="p-4 sm:ml-64">
@@ -15,5 +14,5 @@ export default function HomeLayout() {
         </div>
       </div>
     </div>
-  )
+  );
 }

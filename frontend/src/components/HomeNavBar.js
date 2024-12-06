@@ -13,11 +13,11 @@ export default function HomeNavBar() {
 
   useEffect(() => {
     const isAuthenticated = authService.isAuthenticated();
-    const hasSeenBanner = localStorage.getItem('hasSeenWelcomeBanner');
+    const hasSeenBanner = localStorage.getItem("hasSeenWelcomeBanner");
 
     if (isAuthenticated && !hasSeenBanner) {
       setShowBanner(true);
-      localStorage.setItem('hasSeenWelcomeBanner', 'true');
+      localStorage.setItem("hasSeenWelcomeBanner", "true");
     }
   }, []);
 
@@ -67,7 +67,7 @@ export default function HomeNavBar() {
                 <span className="p-1 font-black self-center text-xl  whitespace-nowrap dark:text-white">
                   <span className="text-blue-800 dark:text-blue-400">Dev</span>
                   <span className="text-blue-500 dark:text-blue-300">
-                    Connect.
+                    Connect
                   </span>
                 </span>
               </Link>

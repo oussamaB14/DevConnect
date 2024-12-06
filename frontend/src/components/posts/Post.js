@@ -29,7 +29,7 @@ export default function Post() {
           >
             <div className="p-4 flex flex-row items-center gap-4">
               <div className="w-10 h-10 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
-                <img src={post.author?._id.avatarUrl} alt="User avatar" ></img>
+                <img src={post.author?._id.avatarUrl} alt="User avatar"></img>
               </div>
               <div className="flex-1">
                 <h3 className="text-lg font-semibold dark:text-white">
@@ -183,23 +183,53 @@ export default function Post() {
               </button>
             </div>
             {showCommentInput && (
-              <div className="px-4 py-2 border-t dark:border-gray-700">
-                <div className="flex items-center gap-2">
-                  <input
-                    type="text"
-                    placeholder="Write a comment..."
-                    className="flex-grow px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-                    value={commentText}
-                    onChange={(e) => setCommentText(e.target.value)}
-                  />
-                  <button
-                    className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-blue-600 dark:hover:bg-blue-700"
-                    onClick={handleCommentSubmit}
-                  >
-                    Submit
-                  </button>
-                </div>
+              <>
+              <div className="mt-4 p-4 bg-white dark:bg-gray-800 rounded-lg border dark:border-gray-700">
+                <h3 className="text-lg font-semibold text-gray-800 dark:text-white">
+                  Comments
+                </h3>
+                <ul className="mt-4 space-y-4">
+                  {post.comments.map(comment => (
+                    <li key={comment._id} className="flex items-start gap-2">
+                      <div className="w-10 h-10 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
+                        <img src={comment.author.avatarUrl} alt="User avatar"></img>
+                      </div>
+                      <div className="flex-1">
+                        <p className="text-sm text-gray-600 dark:text-gray-300">
+                          <span className="font-semibold">{comment.author.firstName} {comment.author.lastName}</span> - {comment.content}
+                        </p>
+                        <p className="text-xs text-gray-500 dark:text-gray-400">
+                          {new Intl.DateTimeFormat("en-US", {
+                            year: "numeric",
+                            month: "long",
+                            day: "2-digit",
+                            hour: "2-digit",
+                            minute: "2-digit",
+                          }).format(new Date(comment.createdAt))}
+                        </p>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
               </div>
+                <div className="px-4 py-2 border-t dark:border-gray-700">
+                  <div className="flex items-center gap-2">
+                    <input
+                      type="text"
+                      placeholder="Write a comment..."
+                      className="flex-grow px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                      value={commentText}
+                      onChange={(e) => setCommentText(e.target.value)}
+                    />
+                    <button
+                      className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-blue-600 dark:hover:bg-blue-700"
+                      onClick={handleCommentSubmit}
+                    >
+                      Submit
+                    </button>
+                  </div>
+                </div>
+              </>
             )}
           </div>
         ))

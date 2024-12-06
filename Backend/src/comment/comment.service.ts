@@ -16,7 +16,7 @@ export class CommentService {
   ) {}
   async createComment(
     createCommentDto: CreateCommentDto,
-    userId: string,
+    author: User,
     postId: string,
   ): Promise<Comment> {
     const postObjectId = new Types.ObjectId(postId);
@@ -24,14 +24,14 @@ export class CommentService {
     // Create the comment
     const newComment = new this.commentModel({
       ...createCommentDto,
-      author: userId,
+      author,
       post: postObjectId,
     });
     const savedComment = await newComment.save();
 
     // Add the comment to the post's comments array
     await this.postModel.findByIdAndUpdate(postObjectId, {
-      $push: { comments: savedComment._id },
+      $push: { comments: savedComment },
     });
 
     return savedComment;
