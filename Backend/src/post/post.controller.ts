@@ -116,4 +116,38 @@ export class PostController {
   remove(@Param('id') id: string) {
     return this.postService.remove(+id);
   }
+
+  @UseGuards(AuthGuard)
+  @Post('like/:id')
+  async likePost(@Param('id') postId: string, @Request() req) {
+    if (!req.user) {
+      throw new UnauthorizedException('User not authenticated');
+    }
+
+    const userId = req.user._id;
+
+    try {
+      await this.postService.likePost(userId, postId);
+      return { message: 'Post liked successfully' };
+    } catch (error) {
+      throw new BadRequestException(error.message || 'Failed to like post');
+    }
+  }
+
+  @UseGuards(AuthGuard)
+  @Delete('like/:id')
+  async unlikePost(@Param('id') postId: string, @Request() req) {
+    if (!req.user) {
+      throw new UnauthorizedException('User not authenticated');
+    }
+
+    const userId = req.user._id;
+
+    try {
+      await this.postService.unlikePost(userId, postId);
+      return { message: 'Post unliked successfully' };
+    } catch (error) {
+      throw new BadRequestException(error.message || 'Failed to unlike post');
+    }
+  }
 }
