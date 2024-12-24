@@ -5,21 +5,20 @@ import Stats from "../components/Stats";
 import Sponsors from "../components/Sponsors";
 import SmallFeatures from "./SmallFeatures";
 import About from "./About";
-import Toast from "../components/Toasts/Toast";
-import { ToastType } from "../components/Toasts/Toast";
 import Accordion from "../components/Accordion";
 const Landing = () => {
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors duration-300">
-      <Toast type={ToastType.SUCCESS} />
-      <Hero />
-      <Stats />
-      <About />
-      <Features />
-      <Sponsors />
-      <SmallFeatures />
-      <Accordion />
+    <>
+      <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors ">
+        <Hero />
+        <Stats />
+        <About />
+        <Features />
+        <Sponsors />
+        <SmallFeatures />
+        <Accordion />
       </div>
+    </>
   );
 };
 

@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import PostHeader from "../components/posts/PostHeader";
 import SpeedDial from "../components/SpeedDial";
-import CreatePostModal from "../components/CreatePostModal"; // Make sure this import exists
 import Post from "../components/posts/Post";
 import FollowListCard from "../components/UsersToFollowCard";
 import ProjectsListCard from "../components/ProjectsListCard";
 import AnnouncementsCard from "../components/AnnouncementsCard";
 import ArticlesList from "../components/ArticlesList";
+import CreatePostModal from "../components/posts/CreatePostModal";
+import { PostProvider } from "../Services/posts/postContext";
+
 export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -14,8 +16,9 @@ export default function Home() {
   const closeModal = () => setIsModalOpen(false);
 
   return (
-    <div>
+    <PostProvider>
       <SpeedDial />
+
       {/* <div className="p-4 sm:ml-64">
         <div className="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 mt-14">
           <div className="grid grid-cols-3 gap-4 mb-4">
@@ -48,16 +51,6 @@ export default function Home() {
         <div className="w-full lg:w-2/3 pr-0 lg:pr-4 md:w-3/4 md:pr-3 sm:landscape:w-3/4 sm:landscape:pr-3">
           {/* List of posts */}
           <Post />
-          <Post />
-          <Post />
-          <Post />
-          <Post />
-          <Post />
-          <Post />
-          <Post />
-          <Post />
-          <Post />
-
           {/* Add more Post components here as needed */}
         </div>
         <div className="hidden lg:block w-1/3 pt-4 space-y-4">
@@ -69,6 +62,6 @@ export default function Home() {
           {/* Add more components here in the future */}
         </div>
       </div>
-    </div>
+    </PostProvider>
   );
 }

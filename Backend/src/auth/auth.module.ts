@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { UserService } from 'src/user/user.service';
-import { TypeOrmModule } from '@nestjs/typeorm';
+//import { TypeOrmModule } from '@nestjs/typeorm';
 import { LocalStrategy } from './strategies/local.strategy';
 import { JwtModule } from '@nestjs/jwt';
 import jwtConfig from './config/jwt.config';
@@ -15,12 +15,15 @@ import { JwtAuthGuard } from './guards/jwt-auth/jwt-auth.guard';
 import { RolesGuard } from './guards/roles/roles.guard';
 import googleOauthConfig from './config/google-oauth.config';
 import { GoogleStrategy } from './strategies/google.strategy';
-import { User } from 'src/user/entities/user.entity';
+import { UserSchema } from 'src/user/entities/user.schema';
 import { UserModule } from 'src/user/user.module';
+import { MongooseModule } from '@nestjs/mongoose';
+import { PassportModule } from '@nestjs/passport';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([User]),
+    MongooseModule.forFeature([{ name: 'User', schema: UserSchema }]),
+    PassportModule.register({ defaultStrategy: 'google' }),
     JwtModule.registerAsync(jwtConfig.asProvider()),
     ConfigModule.forFeature(jwtConfig),
     ConfigModule.forFeature(refreshJwtConfig),
@@ -35,6 +38,7 @@ import { UserModule } from 'src/user/user.module';
     JwtStrategy,
     RefreshJwtStrategy,
     GoogleStrategy,
+    UserService,
     {
       provide: APP_GUARD,
       useClass: JwtAuthGuard, //@UseGuards(JwtAuthGuard) applied on all API endppints

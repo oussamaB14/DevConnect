@@ -38,7 +38,7 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
       firstName: profile.name.givenName,
       lastName: profile.name.familyName,
       avatarUrl: profile.photos[0].value,
-      password: '', // You might want to generate a random password here
+      password: Math.random().toString(36).substring(2, 10), // You might want to generate a random password here
     });
     done(null, user);
     return user;

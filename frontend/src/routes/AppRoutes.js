@@ -9,6 +9,7 @@ import Features from "../pages/Features";
 import Blog from "../pages/Blog";
 import SmallFeatures from "../pages/SmallFeatures";
 import Layout from "./Layout";
+import UserRegister from "../pages/UserRegister";
 
 export default function AppRoutes() {
   return (
@@ -22,6 +23,7 @@ export default function AppRoutes() {
         <Route path="features" element={<Features />} />
         <Route path="blog" element={<Blog />} />
         <Route path="small-features" element={<SmallFeatures />} />
+        <Route path="user-register" element={<UserRegister />} />
       </Route>
     </Routes>
   );

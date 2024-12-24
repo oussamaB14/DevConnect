@@ -1,7 +1,7 @@
-import React from 'react'
-import HomeNavBar from '../components/HomeNavBar'
-import HomeSideBar from '../components/HomeSideBar'
-import { Outlet } from 'react-router-dom'   
+import React from "react";
+import { Outlet } from "react-router-dom";
+import HomeNavBar from "../components/HomeNavBar";
+import HomeSideBar from "../components/HomeSideBar";
 
 export default function HomeLayout() {
   return (
@@ -14,5 +14,5 @@ export default function HomeLayout() {
         </div>
       </div>
     </div>
-  )
+  );
 }

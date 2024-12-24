@@ -1,61 +1,84 @@
-import axios from 'axios';
+// authService.js
+import axios from "axios";
+import { handleError } from "./errorHandler";
 
 const API_URL = process.env.REACT_APP_API_URL;
 
 const authService = {
   setTokens: (accessToken, refreshToken) => {
     if (accessToken && refreshToken) {
-      localStorage.setItem('user', JSON.stringify({ accessToken, refreshToken }));
-      console.log('Tokens set in localStorage:', { accessToken, refreshToken });
+      const accessTokenExpiration = new Date().getTime() + 60 * 60 * 1000; // Example: 1-hour expiration
+      localStorage.setItem("accessToken", accessToken);
+      localStorage.setItem("refreshToken", refreshToken);
+      localStorage.setItem(
+        "accessTokenExpiration",
+        accessTokenExpiration.toString()
+      );
     } else {
-      localStorage.removeItem('user');
-      console.log('Tokens removed from localStorage');
+      authService.clearTokens();
     }
-    window.dispatchEvent(new Event('storage'));
+    window.dispatchEvent(new Event("storage"));
   },
 
   getTokens: () => {
-    const user = JSON.parse(localStorage.getItem('user'));
-    console.log('Retrieved tokens from localStorage:', user);
-    return user ? { accessToken: user.accessToken, refreshToken: user.refreshToken } : null;
+    const accessToken = localStorage.getItem("accessToken");
+    const refreshToken = localStorage.getItem("refreshToken");
+    const expiration = localStorage.getItem("accessTokenExpiration");
+    return accessToken && refreshToken
+      ? { accessToken, refreshToken, expiration }
+      : null;
   },
 
-  getToken: () => {
-    const user = JSON.parse(localStorage.getItem('user'));
-    console.log("Getting token:", user?.token);
-    return user?.token;
+  clearTokens: () => {
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
+    localStorage.removeItem("accessTokenExpiration");
+    window.dispatchEvent(new Event("storage"));
   },
 
-  login: async (googleToken) => {
-    console.log("Logging in with Google token:", googleToken);
-    const response = await axios.post(`${API_URL}auth/google/login`, { token: googleToken });
-    console.log("Full login response:", response);
-    if (response.data && response.data.accessToken && response.data.refreshToken) {
-      authService.setTokens(response.data.accessToken, response.data.refreshToken);
-    } else {
-      console.error("No tokens received from backend");
+  isTokenExpired: () => {
+    const expiration = localStorage.getItem("accessTokenExpiration");
+    if (!expiration) return true;
+    return new Date().getTime() > parseInt(expiration, 10);
+  },
+
+  refreshToken: async () => {
+    try {
+      const { refreshToken } = authService.getTokens();
+      const response = await axios.post(`${API_URL}auth/refresh`, {
+        refreshToken,
+      });
+      const { accessToken, refreshToken: newRefreshToken } = response.data;
+      authService.setTokens(accessToken, newRefreshToken);
+      return accessToken;
+    } catch (error) {
+      handleError(error);
+      authService.clearTokens();
+      throw error;
     }
-    return response.data;
+  },
+  isAuthenticated: () => {
+    const tokens = authService.getTokens();
+    return tokens && tokens.accessToken && !authService.isTokenExpired();
+  },
+
+  getUserInfo: async () => {
+    try {
+      const { accessToken } = authService.getTokens();
+      const response = await axios.get(`${API_URL}user/profile`, {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      });
+      return response.data;
+    } catch (error) {
+      handleError(error);
+      authService.clearTokens();
+      throw error;
+    }
   },
 
   logout: () => {
-    console.log("Logging out");
-    localStorage.removeItem('user');
-    window.dispatchEvent(new Event('storage'));
+    authService.clearTokens();
   },
-
-  isAuthenticated: () => {
-    const tokens = authService.getTokens();
-    const isAuth = !!tokens?.accessToken;
-    console.log('isAuthenticated:', isAuth);
-    return isAuth;
-  },
-
-  initiateGoogleLogin: () => {
-    window.location.href = `${API_URL}auth/google/login`;
-  },
-
-  // ... other methods ...
 };
 
 export default authService;
