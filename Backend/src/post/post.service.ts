@@ -138,4 +138,58 @@ export class PostService {
     const post = await this.postModel.findOne({ where: { id } });
     await post.deleteOne();
   }
+
+  async likePost(userId: any, postId: string) {
+    try {
+      if (!Types.ObjectId.isValid(postId)) {
+        throw new Error('Invalid post ID format');
+      }
+
+      const post = await this.postModel.findById(postId);
+
+      if (!post) {
+        throw new Error('Post not found');
+      }
+
+      if (post.likes.includes(userId)) {
+        throw new Error('Post already liked by user');
+      }
+
+      post.likes.push(userId);
+
+      await post.save();
+
+      return { message: 'Post liked successfully' };
+    } catch (error) {
+      console.error('Error liking post:', error.message);
+      throw new Error('Could not like post');
+    }
+  }
+
+  async unlikePost(userId: any, postId: string) {
+    try {
+      if (!Types.ObjectId.isValid(postId)) {
+        throw new Error('Invalid post ID format');
+      }
+
+      const post = await this.postModel.findById(postId);
+
+      if (!post) {
+        throw new Error('Post not found');
+      }
+
+      if (!post.likes.includes(userId)) {
+        throw new Error('Post not liked by user');
+      }
+
+      post.likes = post.likes.filter((id) => id !== userId);
+
+      await post.save();
+
+      return { message: 'Post unliked successfully' };
+    } catch (error) {
+      console.error('Error unliking post:', error.message);
+      throw new Error('Could not unlike post');
+    }
+  }
 }
