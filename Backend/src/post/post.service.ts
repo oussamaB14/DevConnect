@@ -6,6 +6,7 @@ import { Post } from './entities/post.schema';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import { User } from 'src/user/entities/user.schema';
+import { UpdatePostDto } from './dto/update-post.dto';
 
 @Injectable()
 export class PostService {
@@ -190,6 +191,22 @@ export class PostService {
     } catch (error) {
       console.error('Error unliking post:', error.message);
       throw new Error('Could not unlike post');
+    }
+  }
+
+  async update(id: number, updatePostDto: UpdatePostDto) {
+    try {
+      const post = await this.postModel.findOne({ where: { id } });
+      if (!post) {
+        throw new Error('Post not found');
+      }
+      post.title = updatePostDto.title;
+      post.content = updatePostDto.content;
+      await post.save();
+      return post;
+    } catch (error) {
+      console.error('Error updating post:', error.message);
+      throw new Error('Could not update post');
     }
   }
 }
