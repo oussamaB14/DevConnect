@@ -9,12 +9,14 @@ import {
   Request,
   UnauthorizedException,
   BadRequestException,
+  Patch,
 } from '@nestjs/common';
 import { PostService } from './post.service';
 import { CreatePostDto } from './dto/create-post.dto';
 import { AuthGuard } from 'src/auth/guards/Auth-Guard';
 import { Public } from 'src/auth/decorators/public.decorator';
 import { Types } from 'mongoose';
+import { UpdatePostDto } from './dto/update-post.dto';
 
 @Controller('post')
 export class PostController {
@@ -107,10 +109,10 @@ export class PostController {
     return this.postService.findOne(+id);
   }
 
-  // @Patch(':id')
-  // update(@Param('id') id: string, @Body() updatePostDto: UpdatePostDto) {
-  //   return this.postService.update(+id, updatePostDto);
-  // }
+  @Patch(':id')
+  update(@Param('id') id: string, @Body() updatePostDto: UpdatePostDto) {
+    return this.postService.update(+id, updatePostDto);
+  }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
